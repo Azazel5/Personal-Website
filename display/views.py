@@ -10,4 +10,4 @@ class HomeView(ListView):
 
 class BlogView(TemplateView):
     template_name = 'display/blog.html'
-
+    
