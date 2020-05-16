@@ -19,14 +19,18 @@ $(function() {
       }
       $this = $("#sendMessageButton");
       $this.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
+
+      token = $("#contactForm").find('input[name=csrfmiddlewaretoken]').val()
+
       $.ajax({
-        url: "contact_me.php",
+        url: "",
         type: "POST",
         data: {
           name: name,
           phone: phone,
           email: email,
-          message: message
+          message: message,
+          csrfmiddlewaretoken: token
         },
         cache: false,
         success: function() {
@@ -73,3 +77,19 @@ $(function() {
 $('#name').focus(function() {
   $('#success').html('');
 });
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
