@@ -36,4 +36,7 @@ class HomeView(ListView):
 
 class BlogView(TemplateView):
     template_name = 'display/blog.html'
+
+
+# Build views and URLS for the frontend here.
     

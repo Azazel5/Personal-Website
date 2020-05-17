@@ -10211,3 +10211,8 @@ form .row:first-child .floating-label-form-group {
 .copyright {
   background-color: #1a252f;
 }
+
+.blogs {
+  height: 750px;
+  margin-top: 115px;
+}
