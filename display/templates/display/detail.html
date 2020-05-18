@@ -12,19 +12,11 @@
 {% endblock navbar %}
 
 {% block content %}
-    {% for blog in blogs %}
     <div class="container">
-        <div class="row">
-            <div class="col mt-2 mb-2">
-                <img id="image{{ forloop.counter }}" style="height: 400px; width: 400px">
-            </div>
-
-            <div id="blog_list{{ forloop.counter }}" class="col">
-                <h2><a id="heading{{ forloop.counter }}" href="{% url 'detail' blog.id %}"></a></h2>
-            </div>
+        <div id="content_holder" class="mt-2 mb-2">
+            <img id="image" style="height: 400px; width: 400px">
         </div>
     </div>
-    {% endfor %}
 {% endblock content %}
 
 {% block credits %}

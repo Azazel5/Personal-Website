@@ -1,9 +1,11 @@
 from django.core.mail import send_mail
+from django.views.generic import DetailView
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
 from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
 
 from .models import ProjectModel
+from blog.models import BlogModel 
 
 
 class HomeView(ListView):
@@ -34,9 +36,13 @@ class HomeView(ListView):
         
         return redirect('home')
 
-class BlogView(TemplateView):
+class BlogView(ListView):
+    model = BlogModel
     template_name = 'display/blog.html'
+    context_object_name = 'blogs'
 
+class BlogDetailView(DetailView):
+    model = BlogModel
+    template_name = 'display/detail.html'
+    context_object_name = 'blog_detail'
 
-# Build views and URLS for the frontend here.
-    
