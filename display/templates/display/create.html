@@ -1,0 +1,25 @@
+{% extends 'display/base.html' %}
+{% load static %}
+
+{% block title %}Blog Home{% endblock title %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block navbar %}
+    {% include 'display/partials/navbar.html' %}
+{% endblock navbar %}
+
+{% block content %}
+<div class="container mt-5">
+    <form method="POST" enctype="multipart/form-data" style="height: 800px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+</div>
+{% endblock content %}
+
+{% block credits %}
+        {% include 'display/partials/credits.html' %}
+{% endblock credits %}

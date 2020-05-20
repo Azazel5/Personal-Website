@@ -14,13 +14,16 @@
 {% block content %}
     {% for blog in blogs %}
     <div class="container">
-        <div class="row">
-            <div class="col mt-2 mb-2">
-                <img id="image{{ forloop.counter }}" style="height: 400px; width: 400px">
+        <div class="row divvy mt-5 mb-5">
+            <div class="col">
+                <img id="image{{ forloop.counter }}" style="height: 400px; width: 600px">
             </div>
 
-            <div id="blog_list{{ forloop.counter }}" class="col">
-                <h2><a id="heading{{ forloop.counter }}" href="{% url 'detail' blog.id %}"></a></h2>
+            <div id="blog_list{{ forloop.counter }}" class="col d-flex flex-column align-items-flex-start">
+                <span class="p-2 text-muted" id="category{{ forloop.counter }}"></span>
+                <h2 class="p-2">
+                    <a style="color: black; text-decoration: none;" id="heading{{ forloop.counter }}"
+                    href="{% url 'detail' blog.id %}"></a></h2>      
             </div>
         </div>
     </div>

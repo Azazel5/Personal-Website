@@ -1,8 +1,12 @@
+from django.urls import reverse
 from django.core.mail import send_mail
 from django.views.generic import DetailView
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
 from django.views.generic.base import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from .models import ProjectModel
 from blog.models import BlogModel 
@@ -45,4 +49,15 @@ class BlogDetailView(DetailView):
     model = BlogModel
     template_name = 'display/detail.html'
     context_object_name = 'blog_detail'
+
+class BlogCreateView(LoginRequiredMixin, CreateView):
+    model = BlogModel
+    login_url = '/admin/login/?next=/create/'
+    fields = ['title', 'content', 'time_to_read', 'categories', 'image']
+    template_name = 'display/create.html'
+    
+    def get_success_url(self):
+        return reverse('detail', kwargs={'pk': self.object.pk})
+
+    
 

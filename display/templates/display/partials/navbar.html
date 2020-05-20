@@ -19,6 +19,10 @@
                 {% else %}
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                         href="{% url 'home' %}">Home</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                href="{% url 'create' %}"><i class="fas fa-plus"></i></a></li>
+                        {% endif %}
                 {% endif %}
             </ul>
         </div>
