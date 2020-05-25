@@ -26,31 +26,64 @@ const blogDetail = async(url) => {
         <p class='mt-2'>${data.content}</p>
         `
     });
+    $(".container").attr('style', 'height:auto;')
 
     return response 
 }
 
+const blogCreate = (url) => {
+    $(document).ready(function() {
+        $('#submit_blog').click(function(event) {
+            event.preventDefault()
+            let data = $('#create_form').serialize();   
+            console.log(data)
+            $.ajax({
+                url: url, 
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                type: "POST", 
+                data: data, 
+                processData: false, 
+                contentType: false, 
+                success: function(data, textStatus, jqXHR) {
+                    console.log(data)
+                }, 
+                error: function(data, textStatus, jqXHR) {
+                    console.log(data)
+                }, 
+            })
+        })
+    })
+}
+
 var url = window.location.href
-if(window.location.pathname == "/blog/") {
+if(window.location.pathname === "/blog/") {
     loadBlogs()
-} else if(url.match(/[0-9]/)) {
+} else if(window.location.pathname.match(/[0-9]/)) {
     const parts = url.split("/")
     const blog_id = parts.pop() || parts.pop()
     blogDetail(`http://127.0.0.1:8000/api/blogs/${blog_id}`)
-} else {
-    console.log("NOPE NOPE")
+
+} else if (window.location.pathname === '/blog/create/') {
+    blogCreate('http://127.0.0.1:8000/api/create/')
 }
 
 $(document).ready(function() {
     $(".divvy").mouseenter(function(){
-        console.log("mouse IN")
         $(this).find("a").css("color", "gray")
         $(this).find(".date_time").css("color", "black").removeClass("text-muted")
       });
-      $(".divvy").mouseleave(function(){
-        console.log("mouse OUT")
+    
+    $(".divvy").mouseleave(function(){
         $(this).find("a").css("color", "black")
         $(this).find(".date_time").css("color", "black").addClass("text-muted")
-      });
+    });
+
+    $(".divvy").click(function () {
+        blogLink = $(this).find("a").attr('href')
+        window.location.href = blogLink 
+    })
+
 });
 

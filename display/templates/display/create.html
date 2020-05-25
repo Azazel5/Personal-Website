@@ -4,6 +4,7 @@
 {% block title %}Blog Home{% endblock title %}
 
 {% block styles %}
+    <script src="{% static 'display/js/requests.js' %}"></script>
 {% endblock styles %}
 
 {% block navbar %}
@@ -12,10 +13,31 @@
 
 {% block content %}
 <div class="container mt-5">
-    <form method="POST" enctype="multipart/form-data" style="height: 800px;">
+    <form id="create_form" method="POST" enctype="multipart/form-data" style="height: 800px;">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
+        <div class="form-group">
+            <label for="title">Blog Title</label>
+            <input type="text" class="form-control" id="title" placeholder="Ex - My blog">
+          </div>
+          <div class="form-group">
+            <label for="content">Content</label>
+            <textarea class="form-control" id="content" rows="10"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="time">Time to read</label>
+            <input type="number" class="form-control" id="time" placeholder="Ex - 0">
+          </div>
+          <div class="form-group">
+            <label for="categories">Categories</label>
+            <select class="form-control" id="categories">
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="image">Image</label>
+            <input class="form-control border-0" id="image" type="file">
+            </select>
+          </div>
+          <button id="submit_blog" type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
 {% endblock content %}

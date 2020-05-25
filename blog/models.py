@@ -14,7 +14,7 @@ class BlogModel(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     time_to_read = models.IntegerField(null=True)
-    categories = models.ManyToManyField('Categories')
+    categories = models.ManyToManyField('Categories', related_name='blogs')
     date_posted = models.DateField(auto_now_add=True)
     image = models.ImageField(upload_to='blogImages/', null=True)
 
