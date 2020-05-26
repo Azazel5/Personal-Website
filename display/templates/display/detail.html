@@ -12,13 +12,43 @@
 {% endblock navbar %}
 
 {% block content %}
-    <div class="container" style="height: 1000px;">
-        <div id="content_holder" class="mt-5 mb-2">
-            <img id="image" style="height: 400px; width: 400px">
+    <div class="detail-div">
+        <div class="row p-5">
+            <div class="col-9">
+                <div class="d-flex flex-column align-items-center" style="width: 100%;">
+                    <div>
+                        <div>
+                            <img id="image" style="height: 60vh; width: 90%">
+                        </div>
+                        <div>
+                            <div id="content_holder" class="mt-5 mb-2" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="category-holder">
+                    <div class="items">
+                      <div class="items-head">
+                        <p>Categories</p>
+                        <hr>
+                      </div>
+                      
+                      <div class="items-body">
+                          {% for category in blog_detail.categories.all %}
+                            <div class="items-body-content">
+                                <span>{{ category.category_name }}</span>
+                                <i class="fa fa-angle-right"></i>
+                            </div>
+                          {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+            </div>
         </div>
     </div>
 {% endblock content %}
 
 {% block credits %}
-        {% include 'display/partials/credits.html' %}
+    {% include 'display/partials/credits.html' %}
 {% endblock credits %}

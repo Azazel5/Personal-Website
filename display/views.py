@@ -8,7 +8,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import ProjectModel
-from blog.models import BlogModel 
+from blog.models import BlogModel, Categories 
 
 
 class HomeView(ListView):
@@ -51,3 +51,8 @@ class BlogDetailView(DetailView):
 
 class BlogCreateRender(TemplateView):
     template_name = 'display/create.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(BlogCreateRender, self).get_context_data(**kwargs)
+        context['categories'] = Categories.objects.all() 
+        return context 

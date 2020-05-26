@@ -31,19 +31,48 @@ const blogDetail = async(url) => {
     return response 
 }
 
-const blogCreate = (url) => {
+const blogCreate = () => {
+    $(function () {
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": getCookie("csrftoken") }
+        });
+    });
+
     $(document).ready(function() {
-        $('#submit_blog').click(function(event) {
+        $('#create_form').submit(function(event) {
             event.preventDefault()
-            let data = $('#create_form').serialize();   
-            console.log(data)
+            const serializerArr = $(this).serializeArray()
+
+            var obj = new Object()
+            var cat_list = []
+
+            serializerArr.forEach(element => {
+                if (element.name === 'time_to_read') {
+                    element.value = parseInt(element.value)
+                }
+
+                if (element.name !== 'categories') {
+                    obj[element.name] = element.value 
+                } else {
+                    cat_list.push({
+                        category_name: element.value
+                    })
+                }
+            });
+
+            obj['categories'] = cat_list
+            console.log(JSON.stringify(obj))
+
             $.ajax({
-                url: url, 
-                headers: {
-                    'Content-Type' : 'application/json'
+                url: $(this).attr('action'), 
+                type: $(this).attr('method'), 
+                headers: { 
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json', 
                 },
-                type: "POST", 
-                data: data, 
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(obj), 
                 processData: false, 
                 contentType: false, 
                 success: function(data, textStatus, jqXHR) {
@@ -66,7 +95,7 @@ if(window.location.pathname === "/blog/") {
     blogDetail(`http://127.0.0.1:8000/api/blogs/${blog_id}`)
 
 } else if (window.location.pathname === '/blog/create/') {
-    blogCreate('http://127.0.0.1:8000/api/create/')
+    blogCreate()
 }
 
 $(document).ready(function() {
@@ -87,3 +116,18 @@ $(document).ready(function() {
 
 });
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

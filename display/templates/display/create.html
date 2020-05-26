@@ -13,31 +13,36 @@
 
 {% block content %}
 <div class="container mt-5">
-    <form id="create_form" method="POST" enctype="multipart/form-data" style="height: 800px;">
-        {% csrf_token %}
+    <form id="create_form" method="POST" action="/api/create/" enctype="multipart/form-data" style="height: 800px;">
+      {% csrf_token %}
         <div class="form-group">
             <label for="title">Blog Title</label>
-            <input type="text" class="form-control" id="title" placeholder="Ex - My blog">
+            <input type="text" class="form-control" id="title" name="title" placeholder="Ex - My blog">
           </div>
           <div class="form-group">
             <label for="content">Content</label>
-            <textarea class="form-control" id="content" rows="10"></textarea>
+            <textarea class="form-control" id="content" name="content" rows="10"></textarea>
           </div>
           <div class="form-group">
             <label for="time">Time to read</label>
-            <input type="number" class="form-control" id="time" placeholder="Ex - 0">
+            <input type="number" class="form-control" id="time" name="time_to_read">
           </div>
           <div class="form-group">
             <label for="categories">Categories</label>
-            <select class="form-control" id="categories">
+            <select multiple class="form-control" id="categories" name="categories">
+              {% for category in categories %}
+                <option>{{ category.category_name }}</option>
+              {% endfor %}
             </select>
           </div>
           <div class="form-group">
             <label for="image">Image</label>
-            <input class="form-control border-0" id="image" type="file">
+            <input class="form-control border-0" id="image" name="image" type="file">
             </select>
           </div>
+          <div class="form-group">
           <button id="submit_blog" type="submit" class="btn btn-primary">Save</button>
+          </div>
     </form>
 </div>
 {% endblock content %}
